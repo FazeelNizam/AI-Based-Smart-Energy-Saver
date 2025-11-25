@@ -8,7 +8,7 @@ from datetime import datetime
 # --- Flask Web Server Setup ---
 app = Flask(__name__)
 
-# Global State (Shared between GUI and Server)
+# Global State
 current_state = {
     'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     'hour': 12,
@@ -41,13 +41,13 @@ class SmartHomeSimulator:
             'Washing Machine': 1200, 'Outdoor Lights': 80
         }
         
-        self.switches = {} # Holds Tkinter variables
+        self.switches = {}
         
         self.setup_ui()
         self.update_loop()
 
     def setup_ui(self):
-        # 1. Time Control
+        # Time Control
         frame_time = tk.LabelFrame(self.root, text="Time Simulation", padx=10, pady=10)
         frame_time.pack(fill="x", padx=10, pady=5)
         
@@ -56,7 +56,7 @@ class SmartHomeSimulator:
         self.slider_hour.set(12)
         self.slider_hour.pack(fill="x")
         
-        # 2. Appliance Switches
+        # Appliance Switches
         frame_apps = tk.LabelFrame(self.root, text="Manual Switches", padx=10, pady=10)
         frame_apps.pack(fill="both", expand=True, padx=10, pady=5)
         
@@ -66,7 +66,7 @@ class SmartHomeSimulator:
             cb.pack(anchor="w")
             self.switches[name] = var
 
-        # 3. Status Output
+        # Status Output
         self.lbl_total = tk.Label(self.root, text="Total Output: 0 W", font=("Arial", 14, "bold"), fg="red")
         self.lbl_total.pack(pady=10)
         

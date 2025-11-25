@@ -85,7 +85,7 @@ class EnergyDashboard:
         header = tk.Label(self.root, text="Smart Home Energy & Cost Monitor", font=("Segoe UI", 20, "bold"), bg=bg_color, fg="#2c3e50")
         header.pack(pady=15)
         
-        # 1. Info Panel
+        # Info Panel
         frame_info = tk.Frame(self.root, bg="#dfe6e9", pady=5)
         frame_info.pack(fill="x", padx=20)
         
@@ -95,7 +95,7 @@ class EnergyDashboard:
         self.lbl_status = tk.Label(frame_info, text="Connecting...", fg="gray", bg="#dfe6e9")
         self.lbl_status.pack(side="right", padx=10)
 
-        # 2. Main Metrics
+        # Main Metrics
         frame_metrics = tk.Frame(self.root, bg=bg_color, pady=10)
         frame_metrics.pack()
         
@@ -115,7 +115,7 @@ class EnergyDashboard:
         self.lbl_tier = tk.Label(f2, text="Tier: Low", font=("Segoe UI", 11), fg="#7f8c8d", bg="white")
         self.lbl_tier.pack()
 
-        # 3. Insights Panel
+        # Insights Panel
         frame_tips = tk.LabelFrame(self.root, text="AI Insights", font=("Segoe UI", 12, "bold"), bg="white", fg="#27ae60", padx=15, pady=10)
         frame_tips.pack(fill="x", padx=20, pady=10)
         
@@ -125,9 +125,9 @@ class EnergyDashboard:
         self.lbl_tip_cost = tk.Label(frame_tips, text="--", font=("Segoe UI", 11, "bold"), bg="white", fg="#d35400")
         self.lbl_tip_cost.pack(anchor="w")
 
-        # 4. Live Graph (Improved Styling)
+        # Live Graph
         self.fig, self.ax = plt.subplots(figsize=(8, 4), dpi=100)
-        self.fig.patch.set_facecolor(bg_color) # Match background
+        self.fig.patch.set_facecolor(bg_color)
         self.ax.set_facecolor("white")
         
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.root)
@@ -192,16 +192,16 @@ class EnergyDashboard:
         if self.model:
             pred_w = self.model.predict([[hour, minute, day]])[0]
 
-        # Update GUI Labels
+        # GUI Labels
         self.lbl_time.config(text=f"Simulated Time: {hour:02d}:{minute:02d}")
         self.lbl_actual.config(text=f"{actual_w} W")
         self.lbl_pred.config(text=f"Exp: {pred_w:.0f} W")
         
         self.generate_smart_tip(actual_w, pred_w, hour, apps)
 
-        # --- UPDATE GRAPH DATA ---
-        self.step_counter += 1  # Increment Counter
-        self.x_data.append(self.step_counter) # Use counter, NOT len()
+        # --- GRAPH DATA ---
+        self.step_counter += 1  
+        self.x_data.append(self.step_counter) 
         self.y_actual.append(actual_w)
         self.y_pred.append(pred_w)
 
@@ -214,11 +214,11 @@ class EnergyDashboard:
         # Draw Graph
         self.ax.clear()
         
-        # Plot Actual (Blue Line + Fill)
+        # Plot Actual
         self.ax.plot(self.x_data, self.y_actual, color="#2980b9", linewidth=2, label='Actual')
         self.ax.fill_between(self.x_data, self.y_actual, color="#2980b9", alpha=0.1)
         
-        # Plot Predicted (Green Dashed)
+        # Plot Predicted
         self.ax.plot(self.x_data, self.y_pred, color="#27ae60", linestyle='--', linewidth=2, label='AI Expected')
         
         # Styling
